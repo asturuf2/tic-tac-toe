@@ -7,7 +7,7 @@ html, body {
 
 .display-container{
     display:grid;
-    grid-template-rows: 1fr 8fr;
+    grid-template-rows: 1fr 8fr 1fr;
     grid-template-columns: 1fr 6fr 1fr;
     height:100%;
 }
@@ -45,4 +45,24 @@ html, body {
     border-radius:5px;
     border:1px solid #B2533E;
     background-color: #FCE09B;
+    color: #B2533E;
+    font-size: 4rem;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-container{
+    grid-row:3/4;
+    grid-column: 1/-1;
+    background-color: #B2533E;
+    width:100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.start-game, .restart-game{
+    color: #FCE09B;
+    margin:10px;
 }
