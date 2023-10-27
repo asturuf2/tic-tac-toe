@@ -13,22 +13,23 @@ const gameBoard = (() => {
         })
         boardGrid.innerHTML = boardText;
         handleClick();
+
     }
 
     const restart = () =>{
-        board.forEach((index) =>{
-            boardGrid.innerHTML = "";
-        })
+        location.reload()
     }
 
     const handleClick = () => {
         const squares = document.querySelectorAll(".grid-square")
-        squares.forEach((e) =>{
+        squares.forEach((e,index) =>{
             e.addEventListener("click", () => {
                 if (e.innerText == ""){
                     square = e.id;
                     game.playerMove(square);
                 }
+                board[index] = e.innerText 
+                game.checkWinner()
             })
         })
     }
@@ -74,10 +75,38 @@ const game = (() =>{
          }
     }
 
+    const checkWinner = () => {
+        board = gameBoard.getGameBoard();
+        checkerX = []
+        checkerO = []
+        const winner = [
+            [0,1,2],
+            [3,4,5],
+            [6,7,8],
+            [0,3,6],
+            [1,4,7],
+            [2,5,8],
+            [0,4,8],
+            [6,4,2]
+        ]
+        board.forEach((e,index) =>{
+            if(board[index] == "X"){
+                checkerX.push(index)
+            }
+            if(board[index] == "O"){
+                checkerO.push(index)
+            }
+        })
+        console.log(checkerX,checkerO)
+        //create array of mark instances for X and O like above
+        //compare to each item in winner array
+        //if checkerO or checker X .include all 3 num in a particular winner[i] then return winner
+    }
+
     return {
         start,
         playerMove,
-        
+        checkWinner
     }
 })();
 
