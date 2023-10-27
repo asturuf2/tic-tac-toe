@@ -12,7 +12,7 @@ const gameBoard = (() => {
         boardText += `<div class = "grid-square" id = "${index}">${square}</div>`
         })
         boardGrid.innerHTML = boardText;
-        game.handleClick();
+        handleClick();
     }
 
     const restart = () =>{
@@ -21,10 +21,23 @@ const gameBoard = (() => {
         })
     }
 
+    const handleClick = () => {
+        const squares = document.querySelectorAll(".grid-square")
+        squares.forEach((e) =>{
+            e.addEventListener("click", () => {
+                if (e.innerText == ""){
+                    square = e.id;
+                    game.playerMove(square);
+                }
+            })
+        })
+    }
+
     return {
         createBoard,
         restart,
         getGameBoard,
+        handleClick,
     }
 })();
 
@@ -50,30 +63,21 @@ const game = (() =>{
         gameBoard.createBoard();
     }
 
-    const handleClick = () =>{
-        const gridSquare = document.querySelectorAll(".grid-square")
-        gridSquare.forEach((e,index) =>{
-            e.addEventListener("click", () =>{
-                if (playerTurn == 0){
-                    e.innerText = players[0].mark
-                    playerTurn = 1
-                } else {
-                    e.innerText = players[1].mark
-                    playerTurn = 0;
-                }
-            })
-        })
+    const playerMove = (squareID) =>{
+        const square = document.getElementById(`${squareID}`)
+        if (playerTurn == 0){
+            square.innerText = players[0].mark
+            playerTurn = 1
+        } else {
+            square.innerText = players[1].mark
+            playerTurn = 0;
+         }
     }
-
-    const checkWinner = () =>{
-
-    }
-
 
     return {
         start,
-        handleClick,
-        checkWinner,
+        playerMove,
+        
     }
 })();
 
