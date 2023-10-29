@@ -53,8 +53,9 @@ const game = (() =>{
 
     let players = [];
     let playerTurn = 0;
-    let playerOne = false;
-    let playerTwo = false;
+    const winnerModal = document.querySelector(".modal")
+    const winnerModalText = document.querySelector(".winner-modal")
+    const closeModal = document.querySelector(".close-modal")
 
     const start = () =>{
         players = [
@@ -95,7 +96,8 @@ const game = (() =>{
                 checkerX.push(index)
                 winner.forEach((e) =>{
                    if (checkerX.includes(e[0]) && checkerX.includes(e[1]) && checkerX.includes(e[2])){
-                    console.log("winnerX")
+                        winnerModalText.innerText = "X Wins!"
+                        winnerModal.showModal();
                    }
                 })
             }
@@ -103,7 +105,8 @@ const game = (() =>{
                 checkerO.push(index)
                 winner.forEach((e) =>{
                     if (checkerO.includes(e[0]) && checkerO.includes(e[1]) && checkerO.includes(e[2])){
-                     console.log("winnerO")
+                        winnerModalText.innerText = "O Wins!"
+                        winnerModal.showModal();
                     }
                  })
             }
@@ -112,6 +115,10 @@ const game = (() =>{
         //compare to each item in winner array
         //if checkerO or checker X .include all 3 num in a particular winner[i] then return winner
     }
+
+    closeModal.addEventListener("click", () => {
+        location.reload();
+    })
 
     return {
         start,
@@ -130,5 +137,7 @@ const restartButton = document.querySelector(".restart-game")
 restartButton.addEventListener("click", () => {
     gameBoard.restart();
 })
+
+
 
 
