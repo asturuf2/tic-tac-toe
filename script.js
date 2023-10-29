@@ -53,7 +53,8 @@ const game = (() =>{
 
     let players = [];
     let playerTurn = 0;
- 
+    let playerOne = false;
+    let playerTwo = false;
 
     const start = () =>{
         players = [
@@ -92,12 +93,21 @@ const game = (() =>{
         board.forEach((e,index) =>{
             if(board[index] == "X"){
                 checkerX.push(index)
+                winner.forEach((e) =>{
+                   if (checkerX.includes(e[0]) && checkerX.includes(e[1]) && checkerX.includes(e[2])){
+                    console.log("winnerX")
+                   }
+                })
             }
             if(board[index] == "O"){
                 checkerO.push(index)
+                winner.forEach((e) =>{
+                    if (checkerO.includes(e[0]) && checkerO.includes(e[1]) && checkerO.includes(e[2])){
+                     console.log("winnerO")
+                    }
+                 })
             }
         })
-        console.log(checkerX,checkerO)
         //create array of mark instances for X and O like above
         //compare to each item in winner array
         //if checkerO or checker X .include all 3 num in a particular winner[i] then return winner
