@@ -27,11 +27,24 @@ const gameBoard = (() => {
                 if (e.innerText == ""){
                     square = e.id;
                     game.playerMove(square);
+                    board[index] = e.innerText 
                 }
-                board[index] = e.innerText 
+                computerMove()
                 game.checkWinner()
             })
         })
+    }
+
+    const computerMove = () =>{
+        for (i = 0; i < 9; i++){
+            randomNum = Math.floor((Math.random() * 9))
+            if (board[randomNum] == ""){
+                const checkSquare = document.getElementById(`${randomNum}`)
+                checkSquare.innerText = "O";
+                board[randomNum] = "O"
+                break;
+            }
+        }  
     }
 
     return {
@@ -68,13 +81,20 @@ const game = (() =>{
 
     const playerMove = (squareID) =>{
         const square = document.getElementById(`${squareID}`)
-        if (playerTurn == 0){
-            square.innerText = players[0].mark
-            playerTurn = 1
-        } else {
-            square.innerText = players[1].mark
-            playerTurn = 0;
-         }
+        square.innerText = players[0].mark
+
+    }
+
+    const computerMove = () =>{
+        board = gameBoard.getGameBoard();
+        for (i = 0; i < 9; i++){
+            if (board[i] == ""){
+                const checkSquare = document.getElementById(`${i}`)
+                checkSquare.innerText = "O";
+                board[i] = "O"
+                break;
+            }
+        }  
     }
 
     const checkWinner = () => {
@@ -92,6 +112,17 @@ const game = (() =>{
             [6,4,2]
         ]
         board.forEach((e,index) =>{
+            let num = 0;
+            //check for tie
+            board.forEach((e,index) =>{
+                if(board[index] != ""){
+                    num++;
+                }
+                if (num == 9){
+                    winnerModalText.innerText = "It's a Tie!"
+                        winnerModal.showModal();
+                }
+            })
             if(board[index] == "X"){
                 checkerX.push(index)
                 winner.forEach((e) =>{
@@ -111,9 +142,6 @@ const game = (() =>{
                  })
             }
         })
-        //create array of mark instances for X and O like above
-        //compare to each item in winner array
-        //if checkerO or checker X .include all 3 num in a particular winner[i] then return winner
     }
 
     closeModal.addEventListener("click", () => {
@@ -123,7 +151,7 @@ const game = (() =>{
     return {
         start,
         playerMove,
-        checkWinner
+        checkWinner,
     }
 })();
 
